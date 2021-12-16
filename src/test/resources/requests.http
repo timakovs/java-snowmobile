@@ -1,0 +1,65 @@
+###
+
+POST http://localhost:8080/media/bytes
+Content-Type: image/png
+
+< boondocker.png
+
+### REST
+
+GET http://localhost:8080/snowmobiles/getAll
+
+###
+
+GET http://localhost:8080/snowmobiles/getById?id=6
+
+###
+
+GET http://localhost:8080/snowmobiles/getById?id=55
+
+###
+POST http://localhost:8080/snowmobiles/save
+Content-Type: application/json
+
+{
+  "id": 0,
+  "vendors": "Yamaha",
+  "model_year": 2020,
+  "price": 19000,
+  "qty": 1,
+  "colors": [
+    "black(черный)",
+    "red(красный)"
+  ],
+  "track_length": [154,163],
+  "horse_power": 165
+}
+
+###
+POST http://localhost:8080/snowmobiles/save
+Content-Type: application/json
+
+
+{
+  "id": 3,
+  "vendors": "Yamaha",
+  "model_year": 2020,
+  "price": 20000,
+  "qty": 2,
+  "colors": [
+    "black(черный)",
+    "red(красный)",
+    "white(белый)"
+  ],
+  "track_length": [154,174],
+  "horse_power": 165
+}
+
+###
+
+POST http://localhost:8080/snowmobiles/removeById?id=3
+
+
+###
+POST http://localhost:8080/snowmobiles/restoreById?id=3
+
