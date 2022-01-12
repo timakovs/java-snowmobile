@@ -1,9 +1,39 @@
-###
+### Loading an image - "snowmobileNoImageAvaliable"
 
-POST http://localhost:8080/media/bytes
+POST http://localhost:8080/media/multipart
+Content-Type: multipart/form-data; boundary=WebBoundary
+
+--WebBoundary
+Content-Disposition: form-data; name="file"; filename="snowmobile-no-image-available.png"
+Content-Type: image/png
+
+< snowmobile-no-image-available.png
+--WebBoundary--
+
+> {%
+client.global.set('image', response.body.name);
+%}
+
+###  Loading an images
+POST http://localhost:8080/media/multi-multipart
+Content-Type: multipart/form-data; boundary=WebBoundary
+
+--WebBoundary
+Content-Disposition: form-data; name="files"; filename="boondocker.png"
 Content-Type: image/png
 
 < boondocker.png
+--WebBoundary
+Content-Disposition: form-data; name="files"; filename="Summit%20Expert.png"
+Content-Type: image/png
+
+< Summit%20Expert.png
+--WebBoundary--
+Content-Disposition: form-data; name="files"; filename="Summit%20X.png"
+Content-Type: image/png
+
+< Summit%20X.png
+--WebBoundary--
 
 ### REST
 
@@ -11,49 +41,53 @@ GET http://localhost:8080/snowmobiles/getAll
 
 ###
 
-GET http://localhost:8080/snowmobiles/getById?id=6
+GET http://localhost:8080/snowmobiles/getById?id=2
 
 ###
 
 GET http://localhost:8080/snowmobiles/getById?id=55
 
 ###
+
 POST http://localhost:8080/snowmobiles/save
 Content-Type: application/json
 
 {
   "id": 0,
   "vendors": "Yamaha",
-  "model_year": 2020,
+  "modelYear": 2020,
   "price": 19000,
-  "qty": 1,
+  "qtyOfDay": 3,
+  "qtyOfSnowmobiles": 1,
   "colors": [
     "black(черный)",
     "red(красный)"
   ],
-  "track_length": [154,163],
-  "horse_power": 165
+  "trackParameters": [154,163,13],
+  "horsePower": 165,
+  "specialPrice": 17000,
+  "premiumPrice": 15000
 }
 
 ###
+
 POST http://localhost:8080/snowmobiles/save
 Content-Type: application/json
 
-
 {
   "id": 3,
-  "vendors": "Yamaha",
-  "model_year": 2020,
-  "price": 20000,
-  "qty": 2,
+  "price": 17000,
+  "qtyOfDay": 3,
+  "qtyOfSnowmobiles": 1,
   "colors": [
     "black(черный)",
-    "red(красный)",
-    "white(белый)"
+    "red(красный)"
   ],
-  "track_length": [154,174],
-  "horse_power": 165
+  "trackParameters": [154,163,13],
+  "specialPrice": 17000,
+  "premiumPrice": 15000
 }
+
 
 ###
 
@@ -61,5 +95,22 @@ POST http://localhost:8080/snowmobiles/removeById?id=3
 
 
 ###
-POST http://localhost:8080/snowmobiles/restoreById?id=4
+
+POST http://localhost:8080/snowmobiles/restoreById?id=3
+
+###
+GET http://localhost:8080/rents/getById?id=1
+
+###
+
+POST http://localhost:8080/rents/register
+Content-Type: application/json
+
+{
+  "idSnowmobile": 1,
+  "qtyOfSnowmobilesForRent": 1,
+  "qtyOfDayForRent": 1,
+  "clientFullName": "Иванов Иван Иванович",
+  "phoneNumber": 89171111111
+}
 

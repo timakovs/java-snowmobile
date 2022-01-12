@@ -16,10 +16,13 @@ public class SnowmobileFullRowMapper implements RowMapper<SnowmobileFullModel> {
                 rs.getString("vendors"),
                 rs.getInt("model_year"),
                 rs.getInt("price"),
+                rs.getInt("qty_of_day"),
                 rs.getInt("qty_of_snowmobiles"),
                 (String[]) rs.getArray("colors").getArray(),
                 (Integer[]) rs.getArray("track_parameters").getArray(),
-                rs.getInt("horse_power")
+                rs.getInt("horse_power"),
+                rs.getInt("special_price"),
+                rs.getInt("premium_price")
         );
     }
 }

@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UploadSingleMediaResponceDTO {
+public class UploadSingleMediaResponseDTO {
     private String name;
 }

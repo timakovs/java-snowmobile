@@ -1,8 +1,8 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.dto.SnowmobileGetAllResponceDTO;
-import org.example.dto.SnowmobileGetByIdResponceDTO;
+import org.example.dto.SnowmobileGetAllResponseDTO;
+import org.example.dto.SnowmobileGetByIdResponseDTO;
 import org.example.dto.SnowmobileSaveRequestDTO;
 import org.example.dto.SnowmobileSaveResponseDTO;
 import org.example.manager.SnowmobileManager;
@@ -15,12 +15,12 @@ public class SnowmobileController {
     private final SnowmobileManager manager;
 
     @GetMapping("/getAll")
-    public SnowmobileGetAllResponceDTO getAll() {
+    public SnowmobileGetAllResponseDTO getAll() {
         return manager.getAll();
     }
 
     @GetMapping("/getById")
-    public SnowmobileGetByIdResponceDTO getById(@RequestParam long id) {
+    public SnowmobileGetByIdResponseDTO getById(@RequestParam long id) {
         return manager.getById(id);
     }
 

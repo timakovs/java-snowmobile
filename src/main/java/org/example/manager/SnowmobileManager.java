@@ -1,8 +1,8 @@
 package org.example.manager;
 
 import lombok.RequiredArgsConstructor;
-import org.example.dto.SnowmobileGetAllResponceDTO;
-import org.example.dto.SnowmobileGetByIdResponceDTO;
+import org.example.dto.SnowmobileGetAllResponseDTO;
+import org.example.dto.SnowmobileGetByIdResponseDTO;
 import org.example.dto.SnowmobileSaveRequestDTO;
 import org.example.dto.SnowmobileSaveResponseDTO;
 import org.example.exception.SnowmobileNotFoundException;
@@ -24,10 +24,10 @@ public class SnowmobileManager {
     private final NamedParameterJdbcTemplate template;
     private final SnowmobileBasicRowMapper snowmobileBasicRowMapper;
     private final SnowmobileFullRowMapper snowmobileFullRowMapper;
-    private final int percentSpecialDiscount = 10;
-    private final int percentPremiumDiscount = 15;
+    //private final int percentSpecialDiscount = 10;
+    //private final int percentPremiumDiscount = 15;
 
-    public SnowmobileGetAllResponceDTO getAll() {
+    public SnowmobileGetAllResponseDTO getAll() {
         final List<SnowmobileBasicModel> items = template.query(
                 // language=PostgreSQL
                 """
@@ -40,9 +40,9 @@ public class SnowmobileManager {
                 snowmobileBasicRowMapper
         );
 
-        final SnowmobileGetAllResponceDTO responceDTO = new SnowmobileGetAllResponceDTO(new ArrayList<>(items.size()));
+        final SnowmobileGetAllResponseDTO responceDTO = new SnowmobileGetAllResponseDTO(new ArrayList<>(items.size()));
         for (SnowmobileBasicModel item : items) {
-            responceDTO.getSnowmobiles().add(new SnowmobileGetAllResponceDTO.Snowmobile(
+            responceDTO.getSnowmobiles().add(new SnowmobileGetAllResponseDTO.Snowmobile(
                     item.getId(),
                     item.getVendors(),
                     item.getModelYear(),
@@ -53,26 +53,27 @@ public class SnowmobileManager {
         return responceDTO;
     }
 
-    public SnowmobileGetByIdResponceDTO getById(long id) {
+    public SnowmobileGetByIdResponseDTO getById(long id) {
         try {
             final SnowmobileFullModel item = template.queryForObject(
                     // language=PostgreSQL
                     """
-                            SELECT id, vendors,model_year,price, qty_of_snowmobiles, colors, track_parameters, horse_power  FROM snowmobiles
+                            SELECT id, vendors,model_year,price,qty_of_day, qty_of_snowmobiles, colors, track_parameters, horse_power,special_price,premium_price  FROM snowmobiles
                             WHERE id=:id AND removed=FALSE
                             """,
                     Map.of("id", id),
                     snowmobileFullRowMapper
             );
-            item.setSpecialPrice(item.getPrice() - (item.getPrice() * percentSpecialDiscount /100));
+            //item.setSpecialPrice(item.getPrice() - (item.getPrice() * percentSpecialDiscount /100));
 
-            item.setPremiumPrice(item.getPrice()-(item.getPrice() * percentPremiumDiscount /100));
+            //item.setPremiumPrice(item.getPrice()-(item.getPrice() * percentPremiumDiscount /100));
 
-            final SnowmobileGetByIdResponceDTO responceDTO = new SnowmobileGetByIdResponceDTO(new SnowmobileGetByIdResponceDTO.Snowmobile(
+            final SnowmobileGetByIdResponseDTO responceDTO = new SnowmobileGetByIdResponseDTO(new SnowmobileGetByIdResponseDTO.Snowmobile(
                     item.getId(),
                     item.getVendors(),
                     item.getModelYear(),
                     item.getPrice(),
+                    item.getQtyOfDay(),
                     item.getQtyOfSnowmobiles(),
                     item.getColors(),
                     item.getTrackParameters(),
@@ -94,18 +95,25 @@ public class SnowmobileManager {
         final SnowmobileFullModel item = template.queryForObject(
                 // language=PostgreSQL
                 """
-                        INSERT INTO snowmobiles (vendors,model_year, price, qty_of_snowmobiles, colors,track_parameters,horse_power) 
-                        VALUES (:vendors, :model_year, :price, :qty_of_snowmobiles, :colors, :track_parameters, :horse_power)
-                        RETURNING id, vendors,model_year, price, qty_of_snowmobiles, colors,track_parameters, horse_power
+                        INSERT INTO snowmobiles (vendors,model_year, price,qty_of_day,
+                         qty_of_snowmobiles, colors,track_parameters,horse_power,special_price,
+                         premium_price) 
+                        VALUES (:vendors, :modelYear, :price,:qtyOfDay, :qtyOfSnowmobiles, :colors,
+                         :trackParameters, :horsePower, :specialPrice, :premiumPrice)
+                        RETURNING id, vendors,model_year, price,qty_of_day, qty_of_snowmobiles,
+                         colors,track_parameters, horse_power, special_price, premium_price
                         """,
                 Map.of(
                         "vendors", requestDTO.getVendors(),
                         "modelYear", requestDTO.getModelYear(),
                         "price", requestDTO.getPrice(),
+                        "qtyOfDay", requestDTO.getQtyOfDay(),
                         "qtyOfSnowmobiles", requestDTO.getQtyOfSnowmobiles(),
                         "colors", requestDTO.getColors(),
                         "trackParameters", requestDTO.getTrackParameters(),
-                        "horsePower", requestDTO.getHorsePower()
+                        "horsePower", requestDTO.getHorsePower(),
+                        "specialPrice", requestDTO.getSpecialPrice(),
+                        "premiumPrice", requestDTO.getPremiumPrice()
                 ),
                 snowmobileFullRowMapper
         );
@@ -114,10 +122,13 @@ public class SnowmobileManager {
                 item.getVendors(),
                 item.getModelYear(),
                 item.getPrice(),
+                item.getQtyOfDay(),
                 item.getQtyOfSnowmobiles(),
                 item.getColors(),
                 item.getTrackParameters(),
-                item.getHorsePower()
+                item.getHorsePower(),
+                item.getSpecialPrice(),
+                item.getPremiumPrice()
         ));
 
         return responseDTO;
@@ -141,20 +152,25 @@ public class SnowmobileManager {
             final SnowmobileFullModel item = template.queryForObject(
                     // language=PostgreSQL
                     """
-                            UPDATE snowmobiles SET vendors = :vendors,model_year= :model_year, price = :price, qty_of_snowmobiles = :qty_of_snowmobiles, colors= :colors, track_parameters= :track_parameters, horse_power= :horse_power
+                            UPDATE snowmobiles SET price = :price,qty_of_day= :qtyOfDay, 
+                            qty_of_snowmobiles = :qtyOfSnowmobiles, 
+                            colors= :colors, track_parameters= :trackParameters,
+                            special_price= :specialPrice, premium_price= :premiumPrice
                             WHERE id = :id AND removed = FALSE
-                            RETURNING id, vendors,model_year, price, qty_of_snowmobiles, colors, track_parameters, horse_power
+                            RETURNING id, vendors,model_year, price,qty_of_day, qty_of_snowmobiles, 
+                            colors, track_parameters, horse_power, special_price, premium_price
                             """,
                     Map.of(
                             "id", requestDTO.getId(),
-                            "vendors", requestDTO.getVendors(),
-                            "model_year", requestDTO.getModelYear(),
-                            "price", requestDTO.getPrice(),
-                            "qty", requestDTO.getQtyOfSnowmobiles(),
-                            "colors", requestDTO.getColors(),
-                            "track_length", requestDTO.getTrackParameters(),
-                            "horse_power", requestDTO.getHorsePower()
-                    ),
+                            "price",requestDTO.getPrice(),
+                            "qtyOfDay",requestDTO.getQtyOfDay(),
+                            "qtyOfSnowmobiles",requestDTO.getQtyOfSnowmobiles(),
+                            "colors",requestDTO.getColors(),
+                            "trackParameters",requestDTO.getTrackParameters(),
+                            "specialPrice", requestDTO.getSpecialPrice(),
+                            "premiumPrice",requestDTO.getPremiumPrice()
+
+                            ),
                     snowmobileFullRowMapper
             );
 
@@ -163,23 +179,28 @@ public class SnowmobileManager {
                     item.getVendors(),
                     item.getModelYear(),
                     item.getPrice(),
+                    item.getQtyOfDay(),
                     item.getQtyOfSnowmobiles(),
                     item.getColors(),
                     item.getTrackParameters(),
-                    item.getHorsePower()
-            ));
+                    item.getHorsePower(),
+                    item.getSpecialPrice(),
+                    item.getPremiumPrice()
+
+                    ));
 
             return responseDTO;
         } catch (EmptyResultDataAccessException e) {
             throw new SnowmobileNotFoundException(e);
         }
     }
+
     public void restoreById(long id) {
         final int affected = template.update(
                 // language=PostgreSQL
                 """
-                    UPDATE snowmobiles SET removed = FALSE WHERE id = :id
-                    """,
+                        UPDATE snowmobiles SET removed = FALSE WHERE id = :id
+                        """,
                 Map.of("id", id)
         );
         if (affected == 0) {

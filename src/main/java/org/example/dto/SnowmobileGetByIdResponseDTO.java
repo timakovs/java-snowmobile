@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class SnowmobileGetAllResponceDTO {
-    private List <Snowmobile> snowmobiles;
+public class SnowmobileGetByIdResponseDTO {
+    private Snowmobile snowmobile;
 
     @NoArgsConstructor
     @AllArgsConstructor
@@ -20,5 +18,13 @@ public class SnowmobileGetAllResponceDTO {
         private String vendors;
         private int modelYear;
         private int price;
+        private int qtyOfDay;
+        private int qtyOfSnowmobiles;
+        private String [] colors;
+        private Integer [] trackParameters;
+        private int horsePower;
+        private int specialPrice;
+        private int premiumPrice;
+
     }
 }
