@@ -1,4 +1,4 @@
-package example;
+package org.example;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ class RentTest {
                                 """
                                         {
                                           "rent": {
-                                              "id": 6,
+                                              "id": 5,
                                               "idSnowmobile": 1,
                                               "vendors": "SKI-DOO SUMMIT X",
                                               "qtyOfSnowmobilesForRent": 1,
