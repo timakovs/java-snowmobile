@@ -1,5 +1,6 @@
 org/example/dto/RentRegisterResponseDTO$Rent.class
 org/example/dto/RentGetByIdResponseDTO$Rent.class
+org/example/startup/StartupConfiguration.class
 org/example/Main.class
 org/example/exception/UploadException.class
 org/example/dto/SnowmobileSaveRequestDTO.class
@@ -27,7 +28,6 @@ org/example/dto/UploadSingleMediaResponseDTO.class
 org/example/exception/RentNotFoundException.class
 org/example/rowmapper/SnowmobileBasicRowMapper.class
 org/example/model/SnowmobileBasicModel.class
-startup/StartupConfiguration.class
 org/example/rowmapper/RentSnowmobileRowMapper.class
 org/example/exception/SnowmobileNotFoundException.class
 org/example/controller/SnowmobileController.class

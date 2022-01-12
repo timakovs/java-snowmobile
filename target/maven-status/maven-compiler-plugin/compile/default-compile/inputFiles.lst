@@ -1,5 +1,6 @@
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/exception/SnowmobileQtyNotEnoughtException.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/exception/RentRegistrationException.java
+/Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/startup/StartupConfiguration.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/dto/SnowmobileGetAllResponseDTO.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/dto/RentRegisterRequestDTO.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/model/RentSnowmobileModel.java
@@ -22,7 +23,6 @@
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/controller/RentController.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/rowmapper/SnowmobileFullRowMapper.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/dto/SnowmobileGetByIdResponseDTO.java
-/Users/timakovs/IdeaProjects/final-project/src/main/java/startup/StartupConfiguration.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/Main.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/manager/MediaManager.java
 /Users/timakovs/IdeaProjects/final-project/src/main/java/org/example/rowmapper/SnowmobileBasicRowMapper.java

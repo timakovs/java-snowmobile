@@ -1,4 +1,4 @@
-package startup;
+package org.example.startup;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

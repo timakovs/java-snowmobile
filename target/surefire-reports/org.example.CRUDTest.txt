@@ -1,14 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.example.CRUDTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.02 s <<< FAILURE! - in org.example.CRUDTest
-shouldPerformSnowmoileCRUD  Time elapsed: 1.087 s  <<< ERROR!
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
-	at org.example.CRUDTest.shouldPerformSnowmoileCRUD(CRUDTest.java:34)
-Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
-	at org.example.CRUDTest.shouldPerformSnowmoileCRUD(CRUDTest.java:34)
-Caused by: org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
-	at org.example.CRUDTest.shouldPerformSnowmoileCRUD(CRUDTest.java:34)
-Caused by: java.io.EOFException
-	at org.example.CRUDTest.shouldPerformSnowmoileCRUD(CRUDTest.java:34)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.52 s - in org.example.CRUDTest

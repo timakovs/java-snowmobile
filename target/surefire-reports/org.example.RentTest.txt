@@ -1,14 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.example.RentTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.165 s <<< FAILURE! - in org.example.RentTest
-shouldPerformRent  Time elapsed: 1.088 s  <<< ERROR!
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
-	at org.example.RentTest.shouldPerformRent(RentTest.java:33)
-Caused by: org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
-	at org.example.RentTest.shouldPerformRent(RentTest.java:33)
-Caused by: org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
-	at org.example.RentTest.shouldPerformRent(RentTest.java:33)
-Caused by: java.io.EOFException
-	at org.example.RentTest.shouldPerformRent(RentTest.java:33)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.438 s - in org.example.RentTest
